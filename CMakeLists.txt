@@ -13,6 +13,7 @@ set(SRC_MODEL_DIR /src/model)
 set(SRC_VIEW_DIR /src/view)
 set(SRC_CONTROLLER_DIR /src/controller)
 
+
 if( NOT CMAKE_BUILD_TYPE )
     set( CMAKE_BUILD_TYPE Debug CACHE STRING
         "Choose the type of build, options are: None Debug Release RelWithDebInfo
@@ -31,11 +32,6 @@ set(SOURCE_FILES src/main.cpp src/model/Person.cpp)
 
 include_directories("${PROJECT_BINARY_DIR}")
 include_directories("${PROJECT_SOURCE_DIR}/include")
-#include_directories("${PROJECT_SOURCE_DIR}/include/model")
-#include_directories("${PROJECT_SOURCE_DIR}/include/view")
-#include_directories("${PROJECT_SOURCE_DIR}/include/controller")
-#include_directories("${SRC_MODEL_DIR}")
-#include_directories("${SRC_VIEW_DIR}")
-#include_directories("${SRC_CONTROLLER_DIR}")
 
 add_executable(eatms ${SOURCE_FILES})
+add_executable(test ${PROJECT_SOURCE_DIR}/test/test.cpp)
