@@ -13,11 +13,11 @@ namespace eatms
                 Person (const std::string &name);
                 virtual ~Person () = 0;
 
-                void setAge(const int &age);
-                void setName(const std::string &name);
+                void        setAge(const int &age);
+                void        setName(const std::string &name);
 
                 std::string getName();
-                int getAge();
+                int         getAge();
 
             private:
                 /* data */
