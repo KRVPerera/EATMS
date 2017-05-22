@@ -7,7 +7,6 @@ namespace eatms
     namespace model
     {
         Person::Person(const std::string &name) : name_(std::move(name)){}
-
         Person::~Person(){};
 
         void Person::setAge(const int &age)

@@ -28,7 +28,7 @@ configure_file(
     )
 
 
-set(SOURCE_FILES src/main.cpp src/model/Person.cpp)
+set(SOURCE_FILES src/main.cpp src/model/Person.cpp src/model/WorkingPerson.cpp)
 
 include_directories("${PROJECT_BINARY_DIR}")
 include_directories("${PROJECT_SOURCE_DIR}/include")

@@ -2,6 +2,7 @@
 #define EATMS_MODEL_WORKINGPERSON_H
 
 #include<string>
+#include "model/Person.h"
 
 namespace eatms
 {
@@ -10,22 +11,21 @@ namespace eatms
         class WorkingPerson : public Person
         {
             private:
-                std::string idPrefix;
-                int idNum;
+                std::string idPrefix_;
+                int idNum_;
 
 
             public:
-                WorkingPerson(const std::string &id , const std::string &name) : Perspn(name);
-                virtual ~WorkingPerson()     = 0;
+                WorkingPerson(const std::string &id , const std::string &name) ;
+                virtual ~WorkingPerson()  = 0;
 
-                int         getHashCode();
-                int         getIdNum();
-                std::string getId();
-                std::string getPrefix();
+                int                 getIdNum()      const;
+                const std::string   getId()         const;
+                const std::string   getPrefix()     const;
 
 
-                void        getPrintString() = 0;
-                float       getMonthlyPay()  = 0;
+                void                toString()      const = 0;
+                float               getMonthlyPay() const = 0;
 
             private:
                 void updateId(const std::string &idString);
