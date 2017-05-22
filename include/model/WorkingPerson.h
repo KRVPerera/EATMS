@@ -24,8 +24,8 @@ namespace eatms
                 const std::string   getPrefix()     const;
 
 
-                void                toString()      const = 0;
-                float               getMonthlyPay() const = 0;
+                virtual const std::string                toString()      const = 0;
+                virtual float               getMonthlyPay() const = 0;
 
             private:
                 void updateId(const std::string &idString);

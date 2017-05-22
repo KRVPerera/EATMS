@@ -17,7 +17,7 @@ namespace eatms
                 SalariedEmployee(const std::string &id, const std::string &name);
                 virtual ~SalariedEmployee();
 
-                float getMonthlySalary() const;
+                float getMonthlyPay() const;
                 void  setMonthlySalary(float monthlySalary);
                 const std::string toString()         const;
         };

@@ -10,7 +10,7 @@ namespace eatms
         SalariedEmployee::SalariedEmployee(const std::string &id, const std::string &name): WorkingPerson(id, name){}
         SalariedEmployee::~SalariedEmployee(){}
 
-        float SalariedEmployee::getMonthlySalary() const{
+        float SalariedEmployee::getMonthlyPay() const{
             return monthlySalary_;
         }
 
