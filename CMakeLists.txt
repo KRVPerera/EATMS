@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 2.8)
 project(EmployeeAndTraineeMS)
 
 set(CMAKE_CXX_STANDARD 11)
-set(CMAKE_CXX_FLAGS "-std=c++0x -Wall")
+set(CMAKE_CXX_FLAGS "-std=c++0x -Wall -Wextra")
 
 # The version number
 set (EATMS_RELEASE_YEAR 2017)
@@ -28,10 +28,12 @@ configure_file(
     )
 
 
-set(SOURCE_FILES src/model/Person.cpp src/model/WorkingPerson.cpp src/model/SalariedEmployee.cpp)
+set(SOURCE_FILES src/model/Person.cpp src/model/WorkingPerson.cpp src/model/SalariedEmployee.cpp
+    src/model/WorkingPersonFactory.cpp src/model/HourlyPaidEmployee.cpp src/model/Trainee.cpp src/util/easylogging++.cc)
 
 include_directories("${PROJECT_BINARY_DIR}")
 include_directories("${PROJECT_SOURCE_DIR}/include")
+include_directories("${PROJECT_SOURCE_DIR}/include/util")
 
 add_executable(eatms src/main.cpp ${SOURCE_FILES})
 add_executable(test0 ${PROJECT_SOURCE_DIR}/test/test.cpp ${SOURCE_FILES})

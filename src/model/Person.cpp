@@ -6,7 +6,8 @@ namespace eatms
 {
     namespace model
     {
-        Person::Person(const std::string &name) : name_(std::move(name)){
+        Person::Person(const std::string &name){
+            setName(name);
             setAge(18);
         }
         Person::~Person(){};
@@ -14,6 +15,7 @@ namespace eatms
         void Person::setAge(const int &age)
         {
             if(age < 18){
+                age_ = 18;
                 throw "Invalid Age! Age cannot be less than 18 years";
             }
             age_ = age;

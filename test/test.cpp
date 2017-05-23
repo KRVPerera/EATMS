@@ -1,17 +1,20 @@
 #define CATCH_CONFIG_MAIN
 #include "catch.hpp"
+#include <iostream>
+#include <exception>
+#include <vector>
+#include <string>
 #include "model/SalariedEmployee.h"
+#include "model/WorkingPersonFactory.h"
+#include "model/WorkingPerson.h"
+#include "model/Trainee.h"
+#include "model/HourlyPaidEmployee.h"
 
-unsigned int Factorial(unsigned int num){
-    return 9;
-}
-
-TEST_CASE("Factorials are computed", "[factorial]"){
-    REQUIRE( Factorial(1) == 9 );
-}
+using namespace std;
 
 TEST_CASE("Testing Slaried Employee", "[SalariedEmployee]"){
     eatms::model::SalariedEmployee employeeTest0("EM01", "Sam Jayarathna");
+    ///    eatms::model::WorkingPersonFactory
     employeeTest0.setMonthlySalary(2500.5f);
 
     SECTION (" Updating and reading salary "){
@@ -30,8 +33,51 @@ TEST_CASE("Testing Slaried Employee", "[SalariedEmployee]"){
         REQUIRE(employeeTest0.getAge() == 18);
         employeeTest0.setAge(20);
         REQUIRE(employeeTest0.getAge() == 20);
-        employeeTest0.setAge(-20);
+
+        employeeTest0.setAge(25);
+
         REQUIRE(employeeTest0.getAge() >= 18);
     }
 
+    SECTION(" Working Person Factory all objects"){
+        SECTION( " Salaried employee creation and own setter and getters" ){
+            vector<string> list = {"EM01", "A", "31", "34000"};
+            eatms::model::WorkingPerson * wp0 = eatms::model::WorkingPersonFactory::createWorkingPerson(list);
+
+            REQUIRE(wp0 != NULL);
+
+            REQUIRE(wp0->getAge()        == 31);
+            REQUIRE(wp0->getName()       == "A");
+            REQUIRE(wp0->getMonthlyPay() == 34000);
+
+            eatms::model::SalariedEmployee * semp0 = static_cast<eatms::model::SalariedEmployee*>(wp0);
+            semp0->setMonthlySalary(380000);
+            REQUIRE(wp0->getMonthlyPay() == 380000);
+
+        }
+
+        SECTION( " HourlyPaidEmployee creation and own setter and getters" ){
+
+            vector<string> list = {"EM01", "B", "34", "300", "120"};
+            eatms::model::WorkingPerson * wp0 = eatms::model::WorkingPersonFactory::createWorkingPerson(list);
+
+            REQUIRE(wp0 != NULL);
+
+            REQUIRE(wp0->getAge()        == 34);
+            REQUIRE(wp0->getName()       == "B");
+            REQUIRE(wp0->getMonthlyPay() == 300*120);
+
+
+            eatms::model::HourlyPaidEmployee * hemp0 = static_cast<eatms::model::HourlyPaidEmployee*>(wp0);
+            REQUIRE(hemp0->getHourlyRate() == 300);
+            REQUIRE(hemp0->getHoursWorked() == 120);
+
+            hemp0->setHourlyRate(20);
+            hemp0->setHoursWorked(200);
+
+            REQUIRE(hemp0->getHourlyRate() == 20);
+            REQUIRE(hemp0->getHoursWorked() == 200);
+            REQUIRE(wp0->getMonthlyPay() == 20*200);
+        }
+    }
 }
