@@ -21,7 +21,9 @@ namespace eatms
                 virtual ~Trainee();
 
                 float getMonthlyPay() const;
+
                 void  setDuration(int duration);
+                int  getDuration();
                 void  setMonthlyAllowance(float monthlyAllowance);
                 const std::string toString() const;
         };

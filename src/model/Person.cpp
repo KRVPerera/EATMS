@@ -14,8 +14,8 @@ namespace eatms
 
         void Person::setAge(const int &age)
         {
-            if(age < 18){
-                age_ = 18;
+            if(age < EATMS_EMPLOYEE_MIN_AGE){
+                age_ = EATMS_EMPLOYEE_MIN_AGE;
                 throw "Invalid Age! Age cannot be less than 18 years";
             }
             age_ = age;

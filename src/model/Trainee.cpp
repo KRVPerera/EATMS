@@ -9,8 +9,8 @@ namespace eatms
         Trainee::Trainee(const std::string &id, const std::string &name) : WorkingPerson(id, name){}
         Trainee::Trainee(std::vector<std::string> & in) : WorkingPerson(in[0], in[1]){
             setAge(std::stoi(in[2]));
-            setMonthlyAllowance(std::stof(in[4]));
-            setDuration(std::stoi(in[5]));
+            setMonthlyAllowance(std::stof(in[3]));
+            setDuration(std::stoi(in[4]));
         }
         Trainee::~Trainee(){}
 
@@ -24,6 +24,10 @@ namespace eatms
 
         void Trainee::setDuration(int duration){
             duration_ = duration;
+        }
+
+        int Trainee::getDuration(){
+            return duration_;
         }
 
         const std::string Trainee::toString() const {

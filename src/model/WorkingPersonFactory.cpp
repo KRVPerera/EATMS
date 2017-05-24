@@ -2,10 +2,10 @@
 #include <iostream> // TODO : Remove in RC
 #include <vector>
 #include <string>
-#pragma GCC diagnostic push
-#pragma GCC diagnostic ignored "-Wunused-variable"
+//#pragma GCC diagnostic push
+//#pragma GCC diagnostic ignored "-Wunused-variable"
 #include "util/easylogging++.h"
-#pragma GCC diagnostic pop
+//#pragma GCC diagnostic pop
 #include "model/WorkingPerson.h"
 #include "model/HourlyPaidEmployee.h"
 #include "model/Trainee.h"
@@ -32,7 +32,7 @@ namespace eatms
                 LOG(INFO) << "My first info log using default logger";
                 return  temp;
             }
-            else if(WorkingPersonFactory::isEmployee_(stringList.front())){
+            else if(WorkingPersonFactory::isEmployee(stringList.front())){
                 if(stringList.size() == WorkingPersonStringSize::SALARIED_EMPLOYEE){
 
                     temp = new SalariedEmployee(stringList);
@@ -45,14 +45,14 @@ namespace eatms
             }else{ // not a employee, can be a trainee
                 if(stringList.size() == WorkingPersonStringSize::TRAINEE){
 
-                    temp = new Trainee(stringList.front(), stringList[1]);
+                    temp = new Trainee(stringList);
 
                 }
             }
             return temp;
         };
 
-        bool WorkingPersonFactory::isEmployee_(const std::string & id){
+        bool WorkingPersonFactory::isEmployee(const std::string & id){
             if(id[0] == 'E'){
                 return true;
             }else{

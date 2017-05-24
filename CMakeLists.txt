@@ -9,6 +9,11 @@ set (EATMS_RELEASE_YEAR 2017)
 set (EATMS_RELEASE_MONTH 05)
 set (EATMS_RELEASE_VERSION "TD")
 
+#  Configurations
+set (EATMS_MAX_EMPLOYEE_NUM 100)
+set (EATMS_MAX_TRAINEE_NUM 25)
+set (EATMS_EMPLOYEE_MIN_AGE 18)
+
 set(SRC_MODEL_DIR /src/model)
 set(SRC_VIEW_DIR /src/view)
 set(SRC_CONTROLLER_DIR /src/controller)

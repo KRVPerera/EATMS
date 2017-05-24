@@ -3,6 +3,10 @@
 
 #include <string>
 
+#ifndef EATMS_EMPLOYEE_MIN_AGE
+#define EATMS_EMPLOYEE_MIN_AGE 18
+#endif
+
 namespace eatms
 {
     namespace model

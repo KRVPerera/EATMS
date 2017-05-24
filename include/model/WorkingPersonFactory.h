@@ -21,12 +21,10 @@ namespace eatms
         //TODO :: make this a singleton if needed
         class WorkingPersonFactory
         {
-            private:
-                /* no private data */
-                static bool isEmployee_(const std::string & id);
             public:
                 static WorkingPerson * createWorkingPerson(const std::string & sourceLine);
                 static WorkingPerson * createWorkingPerson(std::vector<std::string> & stringList);
+                static bool isEmployee(const std::string & id);
         };
     } /* model */ 
 } /* eatms */ 

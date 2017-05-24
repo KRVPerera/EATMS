@@ -53,6 +53,7 @@ TEST_CASE("Testing Slaried Employee", "[SalariedEmployee]"){
             eatms::model::SalariedEmployee * semp0 = static_cast<eatms::model::SalariedEmployee*>(wp0);
             semp0->setMonthlySalary(380000);
             REQUIRE(wp0->getMonthlyPay() == 380000);
+            delete wp0;
 
         }
 
@@ -78,6 +79,29 @@ TEST_CASE("Testing Slaried Employee", "[SalariedEmployee]"){
             REQUIRE(hemp0->getHourlyRate() == 20);
             REQUIRE(hemp0->getHoursWorked() == 200);
             REQUIRE(wp0->getMonthlyPay() == 20*200);
+            delete wp0;
+        }
+
+        SECTION( " Trainee creation and own setter and getters" ){
+            vector<string> list = {"TR22", "H", "22", "12000", "8"};
+            eatms::model::WorkingPerson * wp0 = eatms::model::WorkingPersonFactory::createWorkingPerson(list);
+
+            REQUIRE(wp0 != NULL);
+
+            REQUIRE(wp0->getAge()        == 22);
+            REQUIRE(wp0->getName()       == "H");
+            REQUIRE(wp0->getMonthlyPay() == 12000);
+
+            eatms::model::Trainee * temp0 = static_cast<eatms::model::Trainee*>(wp0);
+            temp0->setMonthlyAllowance(12000);
+            REQUIRE(temp0->getMonthlyPay() == 12000);
+            REQUIRE(wp0->getMonthlyPay() == 12000);
+            
+            REQUIRE(temp0->getDuration() == 8);
+            temp0->setDuration(20);
+            REQUIRE(temp0->getDuration() == 20);
+
+            delete wp0;
         }
     }
 }
