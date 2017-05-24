@@ -20,7 +20,7 @@ namespace eatms
                 void        setAge(const int &age);
                 void        setName(const std::string &name);
 
-                std::string getName();
+                const std::string getName() const;
                 int         getAge();
 
             private:

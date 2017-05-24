@@ -29,7 +29,7 @@ namespace eatms
             name_  = std::move(name);
         }
 
-        std::string Person::getName()
+        const std::string Person::getName() const
         {
             return name_;
         }
