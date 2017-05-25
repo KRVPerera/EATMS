@@ -10,7 +10,6 @@
 #include "model/HourlyPaidEmployee.h"
 #include "model/Trainee.h"
 
-INITIALIZE_EASYLOGGINGPP
 
 namespace eatms
 {
@@ -58,6 +57,21 @@ namespace eatms
             }else{
                 return false;
             }
+        }
+
+        // cannot infer concrete types just using the id
+        WorkingPersonType WorkingPersonFactory::getWorkingPersonType(const std::string & id){
+            if(id.size() >= 2){
+                if(id[0] == 'E' && id[1] == 'M'){
+                    return WorkingPersonType::WORKING_PERSON_TYPE_EMPLOYEE;
+                }else if(id[0] == 'T' && id[1] == 'R'){
+                    return WorkingPersonType::WORKING_PERSON_TYPE_TRAINEE;
+                }
+                else{
+                    return WorkingPersonType::WORKING_PERSON_TYPE_UNKNOWN;
+                }
+            }
+            return WorkingPersonType::WORKING_PERSON_TYPE_UNKNOWN;
         }
     } /* model */ 
 } /* eatms */ 

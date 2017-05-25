@@ -2,7 +2,8 @@ cmake_minimum_required(VERSION 2.8)
 project(EmployeeAndTraineeMS)
 
 set(CMAKE_CXX_STANDARD 11)
-set(CMAKE_CXX_FLAGS "-std=c++0x -Wall -Wextra")
+#set(CMAKE_CXX_FLAGS "-std=c++0x -Wall -Wextra")
+set(CMAKE_CXX_FLAGS "-std=c++0x")
 
 # The version number
 set (EATMS_RELEASE_YEAR 2017)
@@ -28,13 +29,18 @@ endif()
 
 
 configure_file(
-    "${PROJECT_SOURCE_DIR}/src/EatmsConfig.h.in"
+    "${PROJECT_SOURCE_DIR}/config/EatmsConfig.h.in"
     "${PROJECT_BINARY_DIR}/EatmsConfig.h"
+    )
+configure_file(
+    "${PROJECT_SOURCE_DIR}/config/loggerconfig.in"
+    "${PROJECT_BINARY_DIR}/loggerconfig.in"
     )
 
 
 set(SOURCE_FILES src/model/Person.cpp src/model/WorkingPerson.cpp src/model/SalariedEmployee.cpp
-    src/model/WorkingPersonFactory.cpp src/model/HourlyPaidEmployee.cpp src/model/Trainee.cpp src/util/easylogging++.cc)
+    src/model/WorkingPersonFactory.cpp src/model/HourlyPaidEmployee.cpp src/model/Trainee.cpp src/util/easylogging++.cc
+    src/data/WorkingPersonDaoHashMap.cpp src/util/util.cpp)
 
 include_directories("${PROJECT_BINARY_DIR}")
 include_directories("${PROJECT_SOURCE_DIR}/include")

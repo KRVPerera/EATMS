@@ -9,10 +9,17 @@
 #include "model/WorkingPerson.h"
 #include "model/Trainee.h"
 #include "model/HourlyPaidEmployee.h"
+#include "data/WorkingPersonDaoHashMap.h"
+#include "util/easylogging++.h"
 
 using namespace std;
 
+INITIALIZE_EASYLOGGINGPP
+
 TEST_CASE("Testing Slaried Employee", "[SalariedEmployee]"){
+    el::Configurations conf("loggerconfig.in");
+    el::Loggers::reconfigureAllLoggers(conf);
+
     eatms::model::SalariedEmployee employeeTest0("EM01", "Sam Jayarathna");
     ///    eatms::model::WorkingPersonFactory
     employeeTest0.setMonthlySalary(2500.5f);
@@ -38,70 +45,87 @@ TEST_CASE("Testing Slaried Employee", "[SalariedEmployee]"){
 
         REQUIRE(employeeTest0.getAge() >= 18);
     }
+}
 
-    SECTION(" Working Person Factory all objects"){
-        SECTION( " Salaried employee creation and own setter and getters" ){
-            vector<string> list = {"EM01", "A", "31", "34000"};
-            eatms::model::WorkingPerson * wp0 = eatms::model::WorkingPersonFactory::createWorkingPerson(list);
+TEST_CASE(" Working Person Factory all objects"){
+    SECTION( " Salaried employee creation and own setter and getters" ){
+        vector<string> list = {"EM01", "A", "31", "34000"};
+        eatms::model::WorkingPerson * wp0 = eatms::model::WorkingPersonFactory::createWorkingPerson(list);
 
-            REQUIRE(wp0 != NULL);
+        REQUIRE(wp0 != NULL);
 
-            REQUIRE(wp0->getAge()        == 31);
-            REQUIRE(wp0->getName()       == "A");
-            REQUIRE(wp0->getMonthlyPay() == 34000);
+        REQUIRE(wp0->getAge()        == 31);
+        REQUIRE(wp0->getName()       == "A");
+        REQUIRE(wp0->getMonthlyPay() == 34000);
 
-            eatms::model::SalariedEmployee * semp0 = static_cast<eatms::model::SalariedEmployee*>(wp0);
-            semp0->setMonthlySalary(380000);
-            REQUIRE(wp0->getMonthlyPay() == 380000);
-            delete wp0;
+        eatms::model::SalariedEmployee * semp0 = static_cast<eatms::model::SalariedEmployee*>(wp0);
+        semp0->setMonthlySalary(380000);
+        REQUIRE(wp0->getMonthlyPay() == 380000);
+        delete wp0;
 
-        }
+    }
 
-        SECTION( " HourlyPaidEmployee creation and own setter and getters" ){
+    SECTION( " HourlyPaidEmployee creation and own setter and getters" ){
 
-            vector<string> list = {"EM01", "B", "34", "300", "120"};
-            eatms::model::WorkingPerson * wp0 = eatms::model::WorkingPersonFactory::createWorkingPerson(list);
+        vector<string> list = {"EM01", "B", "34", "300", "120"};
+        eatms::model::WorkingPerson * wp0 = eatms::model::WorkingPersonFactory::createWorkingPerson(list);
 
-            REQUIRE(wp0 != NULL);
+        REQUIRE(wp0 != NULL);
 
-            REQUIRE(wp0->getAge()        == 34);
-            REQUIRE(wp0->getName()       == "B");
-            REQUIRE(wp0->getMonthlyPay() == 300*120);
+        REQUIRE(wp0->getAge()        == 34);
+        REQUIRE(wp0->getName()       == "B");
+        REQUIRE(wp0->getMonthlyPay() == 300*120);
 
 
-            eatms::model::HourlyPaidEmployee * hemp0 = static_cast<eatms::model::HourlyPaidEmployee*>(wp0);
-            REQUIRE(hemp0->getHourlyRate() == 300);
-            REQUIRE(hemp0->getHoursWorked() == 120);
+        eatms::model::HourlyPaidEmployee * hemp0 = static_cast<eatms::model::HourlyPaidEmployee*>(wp0);
+        REQUIRE(hemp0->getHourlyRate() == 300);
+        REQUIRE(hemp0->getHoursWorked() == 120);
 
-            hemp0->setHourlyRate(20);
-            hemp0->setHoursWorked(200);
+        hemp0->setHourlyRate(20);
+        hemp0->setHoursWorked(200);
 
-            REQUIRE(hemp0->getHourlyRate() == 20);
-            REQUIRE(hemp0->getHoursWorked() == 200);
-            REQUIRE(wp0->getMonthlyPay() == 20*200);
-            delete wp0;
-        }
+        REQUIRE(hemp0->getHourlyRate() == 20);
+        REQUIRE(hemp0->getHoursWorked() == 200);
+        REQUIRE(wp0->getMonthlyPay() == 20*200);
+        delete wp0;
+    }
 
-        SECTION( " Trainee creation and own setter and getters" ){
-            vector<string> list = {"TR22", "H", "22", "12000", "8"};
-            eatms::model::WorkingPerson * wp0 = eatms::model::WorkingPersonFactory::createWorkingPerson(list);
+    SECTION( " Trainee creation and own setter and getters" ){
+        vector<string> list = {"TR22", "H", "22", "12000", "8"};
+        eatms::model::WorkingPerson * wp0 = eatms::model::WorkingPersonFactory::createWorkingPerson(list);
 
-            REQUIRE(wp0 != NULL);
+        REQUIRE(wp0 != NULL);
 
-            REQUIRE(wp0->getAge()        == 22);
-            REQUIRE(wp0->getName()       == "H");
-            REQUIRE(wp0->getMonthlyPay() == 12000);
+        REQUIRE(wp0->getAge()        == 22);
+        REQUIRE(wp0->getName()       == "H");
+        REQUIRE(wp0->getMonthlyPay() == 12000);
 
-            eatms::model::Trainee * temp0 = static_cast<eatms::model::Trainee*>(wp0);
-            temp0->setMonthlyAllowance(12000);
-            REQUIRE(temp0->getMonthlyPay() == 12000);
-            REQUIRE(wp0->getMonthlyPay() == 12000);
-            
-            REQUIRE(temp0->getDuration() == 8);
-            temp0->setDuration(20);
-            REQUIRE(temp0->getDuration() == 20);
+        eatms::model::Trainee * temp0 = static_cast<eatms::model::Trainee*>(wp0);
+        temp0->setMonthlyAllowance(12000);
+        REQUIRE(temp0->getMonthlyPay() == 12000);
+        REQUIRE(wp0->getMonthlyPay() == 12000);
 
-            delete wp0;
+        REQUIRE(temp0->getDuration() == 8);
+        temp0->setDuration(20);
+        REQUIRE(temp0->getDuration() == 20);
+
+        delete wp0;
+    }
+}
+
+TEST_CASE("Testing HashMap and File Parser", "[class::WorkingPersonDaoHashMap]"){
+    SECTION("Testing file parser"){
+        eatms::data::WorkingPersonDaoHashMap daoService_;
+        daoService_.reloadFromFile("../test/EmployeeAndTraineeInformation.txt");
+        SECTION("Testing loaded data"){
+            const eatms::model::WorkingPerson * p = daoService_.getPerson("EM01") ;
+            REQUIRE(p != nullptr);
+
+            REQUIRE(p->getAge()        == 31);
+            REQUIRE(p->getName()       == "H");
+            REQUIRE(p->getMonthlyPay() == 12000);
+
         }
     }
 }
+

@@ -18,6 +18,13 @@ namespace eatms
             HOURLYPAID_EMPLOYEE = 5,
             TRAINEE = 5,
         };
+
+        typedef enum WorkingPersonType{
+            WORKING_PERSON_TYPE_UNKNOWN,
+            WORKING_PERSON_TYPE_EMPLOYEE,
+            WORKING_PERSON_TYPE_TRAINEE,
+        } WorkingPersonType;
+
         //TODO :: make this a singleton if needed
         class WorkingPersonFactory
         {
@@ -25,6 +32,7 @@ namespace eatms
                 static WorkingPerson * createWorkingPerson(const std::string & sourceLine);
                 static WorkingPerson * createWorkingPerson(std::vector<std::string> & stringList);
                 static bool isEmployee(const std::string & id);
+                static WorkingPersonType getWorkingPersonType(const std::string & id);
         };
     } /* model */ 
 } /* eatms */ 

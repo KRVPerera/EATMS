@@ -21,7 +21,7 @@ namespace eatms
                 void        setName(const std::string &name);
 
                 const std::string getName() const;
-                int         getAge();
+                int         getAge() const;
 
             private:
                 /* data */

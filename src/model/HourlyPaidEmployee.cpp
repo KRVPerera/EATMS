@@ -36,8 +36,12 @@ namespace eatms
         }
 
         const std::string HourlyPaidEmployee::toString() const {
-            //TODO :: implement
-            return "Return string of HourlyPaidEmployee";
+            std::string tempString("ID\t:");
+            tempString += getId();
+            tempString += "\nName\t:";
+            tempString += getName();
+            tempString += "\n";
+            return tempString;
         }
     } /* model */ 
 } /* eatms */ 

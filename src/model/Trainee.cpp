@@ -31,8 +31,12 @@ namespace eatms
         }
 
         const std::string Trainee::toString() const {
-            //TODO :: implement
-            return "Return string of Trainee";
+            std::string tempString("ID\t:");
+            tempString += getId();
+            tempString += "\nName\t:";
+            tempString += getName();
+            tempString += "\n";
+            return tempString;
         }
 
     } /* model */

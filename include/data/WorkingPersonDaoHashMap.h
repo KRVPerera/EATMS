@@ -7,6 +7,7 @@
 #include <forward_list>
 #include "model/WorkingPerson.h"
 #include "model/WorkingPersonFactory.h"
+#include "data/WorkingPersonDao.h"
 
 #ifndef EATMS_MAX_EMPLOYEE_NUM
 #define EATMS_MAX_EMPLOYEE_NUM 100
@@ -23,11 +24,12 @@ namespace eatms
         class WorkingPersonDaoHashMap : public WorkingPersonDao
         {
             private:
-                bool dataModified_;
-                bool initilized_;
-                bool cacheInvalidated_;
+
+                bool        dataModified_;
+                bool        initilized_;
+                bool        cacheInvalidated_;
                 std::string fileName_;
-                float cachedTotalPay_;
+                float       cachedTotalPay_;
 
                 std::array<model::WorkingPerson*, EATMS_MAX_EMPLOYEE_NUM> employees_;
                 std::array<model::WorkingPerson*, EATMS_MAX_TRAINEE_NUM> trainees_;
@@ -40,20 +42,22 @@ namespace eatms
                 void unsetModified_();
                 bool isModified_();
                 void loadFromFile_(std::string fileName);
-                int getHash_(std::string id);
+                int  getHash_(const std::string & id) const;
 
             public:
+                // constructors and destructors
                 WorkingPersonDaoHashMap();
                 WorkingPersonDaoHashMap(std::string fileName);
                 virtual ~WorkingPersonDaoHashMap();
 
                 // Overridden methods
-                std::vector<const model::WorkingPerson *> getAllWorkingPerson() const;
-                bool addWorkingPerson(model::WorkingPerson & person);
-                void deleteWorkingPerson(std::string id);
-                float getTotalPay();
-                //std::stringstream& listMonthlyPay();
+                std::vector<const model::WorkingPerson *>    getAllWorkingPerson() const;
+                bool                                         addWorkingPerson(model::WorkingPerson * person);
+                void                                         deleteWorkingPerson(std::string id);
+                float                                        getTotalPay();
                 std::forward_list<std::array<std::string,3>> listMonthlyPay();
+                std::string                                  getDetails(const std::string id) const;
+                const model::WorkingPerson    *              getPerson(const std::string id) const;
 
                 // Own methods
                 void reloadFromFile(std::string fileName);
