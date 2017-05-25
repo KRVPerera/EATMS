@@ -40,7 +40,7 @@ configure_file(
 
 set(SOURCE_FILES src/model/Person.cpp src/model/WorkingPerson.cpp src/model/SalariedEmployee.cpp
     src/model/WorkingPersonFactory.cpp src/model/HourlyPaidEmployee.cpp src/model/Trainee.cpp src/util/easylogging++.cc
-    src/data/WorkingPersonDaoHashMap.cpp src/util/util.cpp)
+    src/data/WorkingPersonDaoHashMap.cpp src/util/util.cpp src/controller/eatms_app.cpp)
 
 include_directories("${PROJECT_BINARY_DIR}")
 include_directories("${PROJECT_SOURCE_DIR}/include")

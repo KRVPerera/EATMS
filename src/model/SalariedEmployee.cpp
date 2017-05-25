@@ -37,11 +37,14 @@ namespace eatms {
          * \return Return parameter description
          */
         const std::string SalariedEmployee::toString() const {
-            std::string tempString("ID\t:");
+            std::string tempString("ID: ");
             tempString += getId();
-            tempString += "\nName\t:";
+            tempString += "\tName: ";
             tempString += getName();
-            tempString += "\n";
+            tempString += "\tAge: ";
+            tempString += std::to_string(getAge());
+            tempString += "\tMonthlyPay:";
+            tempString += std::to_string(getMonthlyPay());
             return tempString;
         }
 

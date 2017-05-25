@@ -1,13 +1,5 @@
-#include <iostream>
-#include <memory>
-#include <vector>
-#include <string>
 #include "util/easylogging++.h"
-#include "EatmsConfig.h"
-#include "model/SalariedEmployee.h"
-#include "model/WorkingPersonFactory.h"
-#include "model/WorkingPerson.h"
-#include "util/util.h"
+#include "controller/eatms_app.h"
 
 //using namespace eatms::model;
 INITIALIZE_EASYLOGGINGPP
@@ -21,23 +13,10 @@ int main(int argc, char *argv[])
     el::Configurations conf(logConfig);
     el::Loggers::reconfigureAllLoggers(conf);
 
-    LOG(INFO) << "Starting the EATMS";
+    LOG(INFO) << "Starting main";
 
-    eatms::util::menuChoice choice = eatms::util::menuChoice::MENU_CHOICE_HELP;
-    eatms::util::Menu::showWelcomeMessage();
+    eatms::controller::EatmsApp eatmsMain(argc, argv);
+    int status = eatmsMain.run();
 
-    do{
-        eatms::util::Menu::showHelpMenu();
-        choice = eatms::util::Menu::getUserChoice();
-        if(choice == eatms::util::menuChoice::MENU_CHOICE_EXIT){
-            break;
-        }
-        //eatms::controller::getService(choice);
-    }while(true);
-
-    std::cout << "Thank you for using the EATMS servie" << std::endl;
-    std::cout << "Hace a nice day!" << std::endl;
-
-    LOG(INFO) << "Exiting the EATMS";
-    return 0;
+    return status;
 }

@@ -46,6 +46,7 @@ namespace eatms
 
             public:
                 // constructors and destructors
+                int         cachedTotalEmployees_; // TODO : access via getter
                 WorkingPersonDaoHashMap();
                 WorkingPersonDaoHashMap(std::string fileName);
                 virtual ~WorkingPersonDaoHashMap();

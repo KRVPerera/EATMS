@@ -18,10 +18,11 @@ namespace eatms
         WorkingPersonDaoHashMap::WorkingPersonDaoHashMap()
         {
 
-            dataModified_     = true;
-            initilized_       = false;
-            cachedTotalPay_   = 0;
-            cacheInvalidated_ = true;
+            dataModified_         = true;
+            initilized_           = false;
+            cachedTotalPay_       = 0;
+            cacheInvalidated_     = true;
+            cachedTotalEmployees_ = 0;
 
             for (int i = 0; i < EATMS_MAX_EMPLOYEE_NUM; ++i)
             {
@@ -223,6 +224,7 @@ namespace eatms
 
         float WorkingPersonDaoHashMap::getTotalPay()
         {
+            cachedTotalEmployees_ = 0;
             if(!cacheInvalidated_)
             {
                 return cachedTotalPay_;
@@ -236,6 +238,7 @@ namespace eatms
                     if(employees_[i])
                     {
                         totalpay += employees_[i]->getMonthlyPay();
+                        cachedTotalEmployees_ += 1;
                     }
                 }
 
@@ -244,6 +247,7 @@ namespace eatms
                     if(trainees_[i])
                     {
                         totalpay += trainees_[i]->getMonthlyPay();
+                        cachedTotalEmployees_ += 1;
                     }
                 }
 
