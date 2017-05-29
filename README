@@ -1,0 +1,12 @@
+## Logs are created inside working directory
+
+## Building and Running
+Create a build folder and invoke
+ >> cmake ..
+ >> make eatms
+ >> ./eatms
+
+To run test only
+ >> cmake ..
+ >> make test0
+ >> ./test0
