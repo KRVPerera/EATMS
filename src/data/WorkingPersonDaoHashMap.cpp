@@ -84,7 +84,12 @@ namespace eatms
         int WorkingPersonDaoHashMap::getHash_(const std::string & id) const
         {
             //TODO : sanitation check
-            return std::stoi(id.substr(2));
+            LOG(DEBUG) << id;
+            if(id.size() > 2){
+                return std::stoi(id.substr(2));
+            }else{
+                return -1;
+            }
         }
 
         void WorkingPersonDaoHashMap::clearEmployee_(int index)
@@ -112,7 +117,7 @@ namespace eatms
         {
             // TODO : move the person to hashmap
             bool result = false;
-                LOG(DEBUG) << "Addding Person : " << person->toString();
+            LOG(DEBUG) << "Addding Person : " << person->toString();
             if(model::WorkingPersonType::WORKING_PERSON_TYPE_UNKNOWN != 
                     model::WorkingPersonFactory::getWorkingPersonType(person->getId())){
 
@@ -126,7 +131,7 @@ namespace eatms
                     }
                     else
                     {
-                        LOG(ERROR) << "Duplicated ID employee not added";
+                        LOG(ERROR) << "Duplicated ID employee not added" << person->getName();
                     }
                 }else{
                     if(trainees_[index] == nullptr)
@@ -135,12 +140,13 @@ namespace eatms
                     }
                     else
                     {
-                        LOG(ERROR) << "Duplicated ID trainee not added";
+                        LOG(ERROR) << "Duplicated ID trainee not added" << person->getName();
                     }
                 }
             }else{
 
                 LOG(ERROR) << "Invalid ID! employee not added";
+                throw "Invalid ID! Person not added " + person->getName();
             }
         }
 
@@ -160,7 +166,7 @@ namespace eatms
             return workingPersonVector;
         }
 
-        void WorkingPersonDaoHashMap::loadFromFile_(std::string fileName)
+        void WorkingPersonDaoHashMap::loadFromFile_(const std::string & fileName)
         {
             std::ifstream inFile (fileName);
 
@@ -172,10 +178,11 @@ namespace eatms
             {
                 std::string line;
                 std::cmatch matches;
+                fileName_ = fileName;
                 std::regex e ("^\\s*((EM|TR)(\\d+))\\s*,(\\s*\\w+\\s*),(\\s*\\d+\\s*),"\
-                 "(\\s*\\d+\\s*),?(\\s*\\d+\\s*)?$",
-                  std::regex_constants::ECMAScript | std::regex_constants::icase |
-                  std::regex_constants::optimize);
+                        "(\\s*(?:\\d*\\.)?\\d+\\s*),?(\\s*(?:\\d*\\.)?\\d+\\s*)?$",
+                        std::regex_constants::ECMAScript | std::regex_constants::icase |
+                        std::regex_constants::optimize);
 
                 while(std::getline(inFile, line))
                 {
@@ -191,12 +198,16 @@ namespace eatms
                                 processedList.push_back(matches[i]);
                             }
                         }
-                        if(model::WorkingPersonType::WORKING_PERSON_TYPE_UNKNOWN !=
-                                model::WorkingPersonFactory::getWorkingPersonType(matches[2])){
+                        try {
+                            if(model::WorkingPersonType::WORKING_PERSON_TYPE_UNKNOWN !=
+                                    model::WorkingPersonFactory::getWorkingPersonType(matches[2])){
 
-                            model::WorkingPerson * tempWorkingPerson = 
-                                model::WorkingPersonFactory::createWorkingPerson(processedList);
-                            addWorkingPerson(tempWorkingPerson);
+                                model::WorkingPerson * tempWorkingPerson = 
+                                    model::WorkingPersonFactory::createWorkingPerson(processedList);
+                                addWorkingPerson(tempWorkingPerson);
+                            }
+                        }catch(std::exception& ex) {
+                            LOG(ERROR) << ex.what();
                         }
                     }
                     else
@@ -224,7 +235,6 @@ namespace eatms
 
         float WorkingPersonDaoHashMap::getTotalPay()
         {
-            cachedTotalEmployees_ = 0;
             if(!cacheInvalidated_)
             {
                 return cachedTotalPay_;
@@ -232,7 +242,7 @@ namespace eatms
             else
             {
                 float totalpay = 0.0f;
-
+                cachedTotalEmployees_ = 0;
                 for (int i = 0; i < EATMS_MAX_EMPLOYEE_NUM; ++i)
                 {
                     if(employees_[i])
@@ -308,6 +318,7 @@ namespace eatms
         const model::WorkingPerson * WorkingPersonDaoHashMap::getPerson(const std::string id) const{
             int index = getHash_(id);
 
+            LOG(DEBUG) << "Index : " << index << "id : " << id;
             if(model::WorkingPersonType::WORKING_PERSON_TYPE_EMPLOYEE ==
                     model::WorkingPersonFactory::getWorkingPersonType(id)){
 
@@ -337,6 +348,10 @@ namespace eatms
         {
             clearTrainees_();
             clearEmployees_();
+        }
+
+        void WorkingPersonDaoHashMap::graceFulExit(){
+            LOG(ERROR) << "Graceful exit not implemented";
         }
 
     } /* data */

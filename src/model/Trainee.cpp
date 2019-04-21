@@ -1,5 +1,7 @@
 #include "model/Trainee.h"
 #include <string>
+#include <sstream>
+#include <iomanip>
 #include "model/WorkingPerson.h"
 
 namespace eatms
@@ -19,11 +21,17 @@ namespace eatms
         }
 
         void Trainee::setMonthlyAllowance(float monthlyAllowance) {
-            monthlyAllowance_ = monthlyAllowance;
+            if(monthlyAllowance != 0){
+                monthlyAllowance_ = monthlyAllowance;
+            }
         }
 
         void Trainee::setDuration(int duration){
-            duration_ = duration;
+            if(duration < 0){
+                duration = 0;
+            }else{
+                duration_ = duration;
+            }
         }
 
         int Trainee::getDuration(){
@@ -31,15 +39,18 @@ namespace eatms
         }
 
         const std::string Trainee::toString() const {
-            std::string tempString("ID: ");
-            tempString += getId();
-            tempString += "\tName: ";
-            tempString += getName();
-            tempString += "\tAge: ";
-            tempString += std::to_string(getAge());
-            tempString += "\tMonthlyPay:";
-            tempString += std::to_string(getMonthlyPay());
-            return tempString;
+            std::stringstream tempStringStream;
+            tempStringStream << "ID : ";
+            tempStringStream << std::setw(7) << std::left << getId();
+            tempStringStream << " Name : ";
+            tempStringStream << std::setw(30) << std::left << getName();
+            tempStringStream << " Age : ";
+            tempStringStream << std::setw(3) << std::left << getAge();
+            tempStringStream << " MonthlyAllowance : Rs. ";
+            tempStringStream << std::setw(15) << std::right << getMonthlyPay();
+            tempStringStream << " Duration : ";
+            tempStringStream << std::setw(3) << std::right << duration_ << " Months";
+            return tempStringStream.str();
         }
 
     } /* model */

@@ -41,7 +41,7 @@ namespace eatms
                 void setModified_();
                 void unsetModified_();
                 bool isModified_();
-                void loadFromFile_(std::string fileName);
+                void loadFromFile_(const std::string & fileName);
                 int  getHash_(const std::string & id) const;
 
             public:
@@ -50,6 +50,8 @@ namespace eatms
                 WorkingPersonDaoHashMap();
                 WorkingPersonDaoHashMap(std::string fileName);
                 virtual ~WorkingPersonDaoHashMap();
+                WorkingPersonDaoHashMap(WorkingPersonDaoHashMap const&)       = delete;
+                void operator=(WorkingPersonDaoHashMap const&)                = delete;
 
                 // Overridden methods
                 std::vector<const model::WorkingPerson *>    getAllWorkingPerson() const;
@@ -63,6 +65,7 @@ namespace eatms
                 // Own methods
                 void reloadFromFile(std::string fileName);
                 void appendFromFile(std::string fileName);
+                void graceFulExit();
                 void clear();
         };
     } /* data */ 

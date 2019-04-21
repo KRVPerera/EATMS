@@ -3,7 +3,7 @@ project(EmployeeAndTraineeMS)
 
 set(CMAKE_CXX_STANDARD 11)
 #set(CMAKE_CXX_FLAGS "-std=c++0x -Wall -Wextra")
-set(CMAKE_CXX_FLAGS "-std=c++0x")
+set(CMAKE_CXX_FLAGS "-std=c++0x -static-libstdc++")
 
 # The version number
 set (EATMS_RELEASE_YEAR 2017)
